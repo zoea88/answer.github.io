@@ -665,6 +665,10 @@ textarea::placeholder {
 .answer-song {
   position: relative;
   z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin: 0;
   text-align: center;
   overflow-wrap: anywhere;
@@ -676,8 +680,8 @@ textarea::placeholder {
   font-size: var(--lyric-size, clamp(1.3rem, 6.2vw, 1.8rem));
   font-weight: 600;
   line-height: 1.26;
-  overflow-wrap: normal;
-  word-break: keep-all;
+  overflow-wrap: anywhere;
+  word-break: normal;
   white-space: pre-line;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
 }
@@ -978,8 +982,8 @@ textarea::placeholder {
   }
 
   .bubble {
-    width: min(58vw, 224px, 27dvh);
-    padding: 1.08rem 0.9rem;
+    width: min(68vw, 270px, 34dvh);
+    padding: 1.16rem 0.96rem;
   }
 
   .bubble.is-dense {
@@ -987,8 +991,8 @@ textarea::placeholder {
   }
 
   .answer-lyric {
-    max-height: 7.1rem;
-    line-height: 1.24;
+    max-height: 8.35rem;
+    line-height: 1.22;
   }
 
   .answer-song {
@@ -1111,8 +1115,8 @@ textarea::placeholder {
   }
 
   .bubble {
-    width: min(52vw, 196px, 24dvh);
-    padding: 0.86rem 0.72rem;
+    width: min(62vw, 236px, 30dvh);
+    padding: 0.94rem 0.78rem;
   }
 
   .answer-actions {

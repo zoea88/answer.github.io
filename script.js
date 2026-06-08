@@ -71,37 +71,53 @@ function lyricFontSize(lyric) {
   if (pressure > 46) return "0.84rem";
   if (pressure > 34) return "0.96rem";
   if (pressure > 24) return "1.08rem";
-  return "1.26rem";
+  return "1.46rem";
+}
+
+function scheduleLyricFit() {
+  if (!answerZone.classList.contains("is-visible")) return;
+
+  window.requestAnimationFrame(() => {
+    fitLyricText();
+    window.setTimeout(fitLyricText, 120);
+    window.setTimeout(fitLyricText, 420);
+    window.setTimeout(fitLyricText, 900);
+  });
 }
 
 function fitLyricText() {
   const bubble = answerBubble;
-  const minSize = 0.34;
+  const minSize = 0.42;
+  const baseSize = answerLyric.dataset.baseSize || "1.46rem";
   const setAvailableHeight = () => {
     const availableHeight = Math.max(72, bubble.clientHeight - answerSong.offsetHeight - 24);
     answerLyric.style.maxHeight = `${availableHeight}px`;
   };
 
   bubble.classList.remove("is-dense");
+  answerLyric.style.setProperty("--lyric-size", baseSize);
   setAvailableHeight();
+
+  if (bubble.clientWidth < 40 || answerLyric.clientWidth < 40 || answerLyric.clientHeight < 20) {
+    return;
+  }
+
+  const isOverflowing = () => (
+    answerLyric.scrollHeight > answerLyric.clientHeight + 2 ||
+    answerLyric.scrollWidth > answerLyric.clientWidth + 2
+  );
   let size = Number.parseFloat(window.getComputedStyle(answerLyric).fontSize) / 16;
 
-  while (
-    size > minSize &&
-    (answerLyric.scrollHeight > answerLyric.clientHeight || answerLyric.scrollWidth > answerLyric.clientWidth)
-  ) {
+  while (size > minSize && isOverflowing()) {
     size -= 0.04;
     answerLyric.style.setProperty("--lyric-size", `${size.toFixed(2)}rem`);
   }
 
-  if (answerLyric.scrollHeight > answerLyric.clientHeight) {
+  if (answerLyric.scrollHeight > answerLyric.clientHeight + 2) {
     bubble.classList.add("is-dense");
     setAvailableHeight();
 
-    while (
-      size > minSize &&
-      (answerLyric.scrollHeight > answerLyric.clientHeight || answerLyric.scrollWidth > answerLyric.clientWidth)
-    ) {
+    while (size > minSize && isOverflowing()) {
       size -= 0.04;
       answerLyric.style.setProperty("--lyric-size", `${size.toFixed(2)}rem`);
     }
@@ -124,8 +140,10 @@ function goOracle() {
 
 function revealAnswer(page) {
   const answer = answerForPage(page);
+  const baseSize = lyricFontSize(answer.lyric);
   answerLyric.textContent = answer.lyric.trim();
-  answerLyric.style.setProperty("--lyric-size", lyricFontSize(answer.lyric));
+  answerLyric.dataset.baseSize = baseSize;
+  answerLyric.style.setProperty("--lyric-size", baseSize);
   answerSong.textContent = `—— 《${answer.song}》`;
   answerZone.classList.remove("is-visible");
 
@@ -133,8 +151,8 @@ function revealAnswer(page) {
     answerBubble.style.animation = "none";
     answerBubble.offsetHeight;
     answerBubble.style.animation = "";
-    fitLyricText();
     answerZone.classList.add("is-visible");
+    scheduleLyricFit();
   }, 120);
 }
 
@@ -295,9 +313,13 @@ window.addEventListener("keydown", (event) => {
 
 window.addEventListener("resize", () => {
   if (answerZone.classList.contains("is-visible")) {
-    fitLyricText();
+    scheduleLyricFit();
   }
 });
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(scheduleLyricFit);
+}
 
 setPage(1, false);
 
