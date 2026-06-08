@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1028">
+  <title>魏如萱的答案之书</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="ambient-layer" aria-hidden="true">
+      <span class="orb orb-a"></span>
+      <span class="orb orb-b"></span>
+      <span class="orb orb-c"></span>
+      <div class="stars"></div>
+    </div>
+
+    <main class="stage" aria-live="polite">
+      <section class="page cover-page is-active" id="coverPage" data-page="cover" aria-labelledby="coverTitle">
+        <p class="eyebrow">The Shell Oracle</p>
+        <h1 id="coverTitle">魏如萱的答案之书</h1>
+
+        <button class="shell-book" id="shellBook" type="button" aria-label="划开或点击贝壳书">
+          <span class="hinge" aria-hidden="true"></span>
+          <span class="shell shell-back" aria-hidden="true"></span>
+          <span class="shell shell-front" aria-hidden="true">
+            <span class="shell-ribs"></span>
+          </span>
+          <span class="inner-page inner-left" aria-hidden="true"></span>
+          <span class="inner-page inner-right" aria-hidden="true"></span>
+        </button>
+
+        <article class="ritual-card" id="ritualCard">
+          <p>闭上眼睛，在心中默念你的问题 3 遍。</p>
+          <p>凭借直觉，翻开属于你的那一页。</p>
+          <p>waa 会给你答案。</p>
+          <button class="glow-button" id="enterButton" type="button">开启内心世界</button>
+        </article>
+
+        <p class="swipe-hint">向上或向右轻划，打开这本贝壳书</p>
+        <p class="disclaimer cover-disclaimer">免责声明：仅供娱乐，且无任何商业用途。</p>
+      </section>
+
+      <section class="page oracle-page" id="oraclePage" data-page="oracle" aria-labelledby="oracleTitle">
+        <div class="tarot-card">
+          <div class="tarot-border" aria-hidden="true">
+            <span class="corner corner-lt">☾</span>
+            <span class="corner corner-rt">✦</span>
+            <span class="corner corner-lb">♆</span>
+            <span class="corner corner-rb">☽</span>
+          </div>
+
+          <header class="oracle-header">
+            <p class="eyebrow">Ask softly, listen slowly</p>
+            <h2 id="oracleTitle">答案也许在歌里</h2>
+            <p class="oracle-subtitle">无论过去发生什么，最好的永远尚未到来。</p>
+          </header>
+
+          <label class="question-field">
+            <span>你的问题</span>
+            <textarea id="questionInput" rows="3" placeholder="请默念你的问题，或在此写下来（选填）…"></textarea>
+          </label>
+
+          <section class="page-picker" aria-label="页码选择">
+            <button class="page-step" id="prevPage" type="button" aria-label="上一页">←</button>
+            <label class="page-number-wrap">
+              <span>PAGE</span>
+              <input id="pageInput" type="text" value="001" inputmode="numeric" aria-label="输入 001 到 240 页">
+            </label>
+            <button class="page-step" id="nextPage" type="button" aria-label="下一页">→</button>
+          </section>
+          <p class="page-hint">可手动输入，或左右滑动切换 001 - 240 页</p>
+
+          <button class="confirm-button" id="confirmButton" type="button" aria-label="确定翻开">
+            <span class="pearl-core"></span>
+          </button>
+
+          <button class="destiny-button" id="randomButton" type="button">
+            <span>交付命运</span>
+            <small>冥想随机</small>
+          </button>
+
+          <section class="answer-zone" id="answerZone" aria-live="polite">
+            <div class="bubble" id="answerBubble">
+              <span class="bubble-shine" aria-hidden="true"></span>
+              <p class="answer-lyric" id="answerLyric"></p>
+              <p class="answer-song" id="answerSong"></p>
+            </div>
+            <div class="answer-actions">
+              <button class="reset-button" id="resetButton" type="button">再次闭眼倾诉</button>
+              <button class="home-button" id="homeButton" type="button">返回首页</button>
+            </div>
+          </section>
+          <p class="disclaimer oracle-disclaimer">免责声明：仅供娱乐，且无任何商业用途。</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="answers-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

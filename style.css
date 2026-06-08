@@ -1,0 +1,1225 @@
+:root {
+  --night: #080d24;
+  --night-2: #171037;
+  --violet: #4f3a74;
+  --pearl: #f6f0df;
+  --pearl-soft: rgba(246, 240, 223, 0.72);
+  --line: rgba(246, 240, 223, 0.36);
+  --gold: #d8bd82;
+  --blue-glow: #9dc8ff;
+  --pink-glow: #f1b8d9;
+  --shadow: rgba(0, 0, 0, 0.42);
+  --serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --display: "Cormorant Garamond", "Noto Serif SC", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  margin: 0;
+  color: var(--pearl);
+  background:
+    radial-gradient(circle at 50% -10%, rgba(147, 146, 211, 0.36), transparent 34rem),
+    radial-gradient(circle at 12% 72%, rgba(67, 113, 153, 0.3), transparent 20rem),
+    linear-gradient(145deg, var(--night), var(--night-2) 48%, #060712);
+  font-family: var(--serif);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+textarea,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ambient-layer,
+.ambient-layer::before,
+.ambient-layer::after,
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ambient-layer {
+  z-index: -1;
+}
+
+.ambient-layer::before {
+  content: "";
+  opacity: 0.25;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at center, black, transparent 72%);
+}
+
+.ambient-layer::after {
+  content: "";
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.75) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 24%, rgba(255, 255, 255, 0.56) 0 1px, transparent 2px),
+    radial-gradient(circle at 64% 70%, rgba(255, 255, 255, 0.5) 0 1px, transparent 2px),
+    radial-gradient(circle at 34% 86%, rgba(255, 255, 255, 0.56) 0 1px, transparent 2px);
+  background-size: 170px 220px;
+  animation: starDrift 18s linear infinite;
+}
+
+.stars {
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.22) 0 1px, transparent 2px) 20px 40px / 90px 130px,
+    radial-gradient(circle, rgba(157, 200, 255, 0.28) 0 1px, transparent 3px) 30px 10px / 150px 180px;
+  animation: floatStars 11s ease-in-out infinite alternate;
+}
+
+.orb {
+  position: fixed;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 999px;
+  filter: blur(20px);
+  opacity: 0.45;
+  animation: orbFloat 9s ease-in-out infinite alternate;
+}
+
+.orb-a {
+  top: 8%;
+  left: -4rem;
+  background: rgba(122, 155, 221, 0.34);
+}
+
+.orb-b {
+  right: -5rem;
+  bottom: 18%;
+  background: rgba(241, 184, 217, 0.26);
+  animation-delay: -4s;
+}
+
+.orb-c {
+  left: 32%;
+  bottom: -7rem;
+  background: rgba(216, 189, 130, 0.18);
+  animation-delay: -2s;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: max(1.2rem, env(safe-area-inset-top)) 1.2rem max(1.2rem, env(safe-area-inset-bottom));
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem) scale(0.985);
+  transition: opacity 700ms ease, transform 700ms ease, visibility 700ms;
+}
+
+.page.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.eyebrow {
+  margin: 0 0 0.55rem;
+  color: var(--gold);
+  font-family: var(--display);
+  font-size: 0.84rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.cover-page h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.9rem, 9vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-shadow: 0 0 22px rgba(246, 240, 223, 0.22);
+}
+
+.disclaimer {
+  position: absolute;
+  left: 50%;
+  bottom: max(0.5rem, env(safe-area-inset-bottom));
+  z-index: 6;
+  width: min(92vw, 420px);
+  margin: 0;
+  color: rgba(246, 240, 223, 0.42);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.shell-book {
+  position: relative;
+  width: min(78vw, 330px);
+  aspect-ratio: 1.1;
+  margin: 1.2rem 0 1.3rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  perspective: 900px;
+  filter: drop-shadow(0 28px 42px rgba(0, 0, 0, 0.34));
+}
+
+.shell,
+.inner-page,
+.hinge {
+  position: absolute;
+  display: block;
+}
+
+.hinge {
+  z-index: 7;
+  left: 7%;
+  top: 49%;
+  width: 22%;
+  height: 14%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 40%, #b9a58a, #604a3b 68%, transparent 70%),
+    linear-gradient(90deg, transparent, rgba(246, 240, 223, 0.45), transparent);
+  transform: rotate(-8deg);
+  opacity: 0.82;
+}
+
+.shell {
+  left: 12%;
+  top: 5%;
+  width: 82%;
+  height: 88%;
+  border-radius: 8% 92% 54% 46% / 11% 52% 48% 89%;
+  transform-origin: 8% 54%;
+  transition: transform 950ms cubic-bezier(0.2, 0.9, 0.2, 1), filter 950ms ease;
+}
+
+.shell-back {
+  z-index: 1;
+  background:
+    radial-gradient(circle at 22% 80%, rgba(255, 255, 255, 0.9), transparent 18%),
+    linear-gradient(135deg, #d9dcea, #f8f5ee 54%, #a8acc9);
+  transform: rotate(-5deg) translateX(-4%);
+}
+
+.shell-front {
+  z-index: 5;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 72% 20%, rgba(255, 255, 255, 0.84), transparent 14%),
+    radial-gradient(circle at 40% 56%, rgba(246, 199, 214, 0.34), transparent 48%),
+    linear-gradient(135deg, #eef4ff 4%, #d7d9ec 42%, #fbf5ed 74%, #b4bad4);
+  box-shadow:
+    inset 0 1px 18px rgba(255, 255, 255, 0.78),
+    inset -18px -20px 34px rgba(70, 72, 105, 0.28);
+}
+
+.shell-front::before {
+  content: "";
+  position: absolute;
+  inset: -16% 0 -8% -4%;
+  background: repeating-conic-gradient(from -18deg at 4% 54%, rgba(75, 87, 129, 0.34) 0 2deg, transparent 2.5deg 8deg);
+  mix-blend-mode: multiply;
+  opacity: 0.64;
+}
+
+.shell-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.5), transparent 57%);
+  transform: translateX(-90%);
+  animation: shellGlimmer 4.2s ease-in-out infinite;
+}
+
+.shell-ribs {
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(from -17deg at 2% 54%, transparent 0 5deg, rgba(255, 255, 255, 0.5) 5.4deg 6.8deg, transparent 7deg 9deg);
+  opacity: 0.54;
+}
+
+.inner-page {
+  z-index: 3;
+  top: 24%;
+  width: 47%;
+  height: 54%;
+  border: 1px solid rgba(220, 207, 181, 0.56);
+  background:
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.95), transparent 58%),
+    linear-gradient(145deg, #f8f4ea, #d9d3c5);
+  opacity: 0;
+  transition: opacity 620ms ease 260ms, transform 800ms ease;
+}
+
+.inner-left {
+  left: 16%;
+  border-radius: 62% 30% 32% 68% / 50% 36% 64% 50%;
+  transform: rotate(-9deg) scale(0.78);
+}
+
+.inner-right {
+  right: 7%;
+  border-radius: 32% 66% 64% 34% / 35% 55% 45% 65%;
+  transform: rotate(10deg) scale(0.78);
+}
+
+.cover-page.is-open .shell-front {
+  transform: rotateY(-138deg) rotateZ(-4deg) translateX(-4%);
+  filter: brightness(1.08);
+}
+
+.cover-page.is-open .inner-page {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.ritual-card {
+  width: min(88vw, 340px);
+  padding: 1.1rem 1.05rem 1.2rem;
+  border: 1px solid rgba(246, 240, 223, 0.22);
+  border-radius: 1.4rem;
+  background: rgba(13, 18, 48, 0.5);
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.24), inset 0 0 34px rgba(255, 255, 255, 0.04);
+  text-align: center;
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 700ms ease 380ms, transform 700ms ease 380ms;
+}
+
+.cover-page.is-open .ritual-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ritual-card p {
+  margin: 0.28rem 0;
+  color: var(--pearl-soft);
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+
+.glow-button,
+.confirm-button,
+.destiny-button {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(246, 240, 223, 0.4);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.26), transparent 38%),
+    linear-gradient(135deg, rgba(216, 189, 130, 0.26), rgba(118, 117, 193, 0.32));
+  box-shadow: 0 0 26px rgba(216, 189, 130, 0.18);
+  cursor: pointer;
+}
+
+.glow-button {
+  margin-top: 1rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+  animation: pulseButton 2.4s ease-in-out infinite;
+}
+
+.swipe-hint {
+  margin: 0.35rem 0 0;
+  color: rgba(246, 240, 223, 0.52);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  animation: hintFloat 1.8s ease-in-out infinite;
+}
+
+.oracle-page {
+  align-content: stretch;
+  padding-top: max(0.35rem, env(safe-area-inset-top));
+  padding-bottom: max(0.35rem, env(safe-area-inset-bottom));
+}
+
+.tarot-card {
+  position: relative;
+  width: min(94vw, 430px);
+  min-height: calc(100svh - 0.7rem);
+  padding: 1.48rem 1.05rem 2.55rem;
+  border-radius: 1.8rem;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(216, 189, 130, 0.14), transparent 22rem),
+    radial-gradient(circle at 22% 88%, rgba(157, 200, 255, 0.12), transparent 13rem),
+    rgba(10, 14, 38, 0.68);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34), inset 0 0 80px rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(20px);
+}
+
+.tarot-border {
+  position: absolute;
+  inset: 0.7rem;
+  border: 1px solid rgba(216, 189, 130, 0.52);
+  border-radius: 1.35rem;
+  pointer-events: none;
+}
+
+.tarot-border::before,
+.tarot-border::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 48%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(246, 240, 223, 0.55), transparent);
+  transform: translateX(-50%);
+}
+
+.tarot-border::before {
+  top: 1.45rem;
+}
+
+.tarot-border::after {
+  bottom: 1.45rem;
+}
+
+.corner {
+  position: absolute;
+  color: rgba(216, 189, 130, 0.8);
+  font-size: 1.05rem;
+}
+
+.corner-lt { left: 0.75rem; top: 0.55rem; }
+.corner-rt { right: 0.75rem; top: 0.55rem; }
+.corner-lb { left: 0.75rem; bottom: 0.55rem; }
+.corner-rb { right: 0.75rem; bottom: 0.55rem; }
+
+.oracle-header {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 18rem);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.oracle-header h2 {
+  margin: 0;
+  font-size: clamp(1.32rem, 6vw, 1.9rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.oracle-subtitle {
+  width: 100%;
+  margin: 0.36rem auto 0.78rem;
+  color: rgba(246, 240, 223, 0.62);
+  font-size: clamp(0.72rem, 3.1vw, 0.9rem);
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  text-align: justify;
+  text-align-last: justify;
+}
+
+.question-field {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 0.45rem;
+  width: min(88%, 330px);
+  margin: 0 auto 0.5rem;
+}
+
+.question-field span,
+.page-number-wrap span {
+  color: rgba(216, 189, 130, 0.86);
+  font-family: var(--display);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+textarea,
+input {
+  width: 100%;
+  border: 1px solid rgba(216, 189, 130, 0.42);
+  color: var(--pearl);
+  background: rgba(255, 255, 255, 0.07);
+  outline: none;
+  box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.025);
+}
+
+textarea {
+  min-height: 4.25rem;
+  resize: none;
+  padding: 0.72rem 0.85rem;
+  border-radius: 1rem;
+  line-height: 1.6;
+}
+
+textarea::placeholder {
+  color: rgba(246, 240, 223, 0.42);
+}
+
+.page-picker {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 3rem 1fr 3rem;
+  align-items: end;
+  gap: 0.65rem;
+  margin: 0.42rem 0;
+  touch-action: pan-y;
+}
+
+.page-step {
+  height: 2.8rem;
+  border: 1px solid rgba(246, 240, 223, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+
+.page-number-wrap {
+  display: grid;
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.page-number-wrap input {
+  height: 3.55rem;
+  border-radius: 1.1rem;
+  color: var(--pearl);
+  font-family: var(--display);
+  font-size: 2.3rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-align: center;
+}
+
+.page-number-wrap input.is-rolling {
+  animation: numberRoll 90ms linear infinite;
+}
+
+.page-hint {
+  position: relative;
+  z-index: 2;
+  margin: -0.28rem 0 0.42rem;
+  color: rgba(246, 240, 223, 0.48);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.confirm-button {
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 3.05rem;
+  height: 3.05rem;
+  margin: 0 auto 0.4rem;
+  padding: 0;
+  border-radius: 999px;
+  color: transparent;
+  animation: pearlPulse 2.6s ease-in-out infinite;
+}
+
+.confirm-button::before {
+  content: "";
+  position: absolute;
+  inset: -0.52rem;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(246, 240, 223, 0.28), transparent 68%);
+}
+
+.pearl-core {
+  position: relative;
+  z-index: 1;
+  width: 1.72rem;
+  height: 1.72rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 28% 25%, rgba(255, 255, 255, 0.98) 0 13%, transparent 14%),
+    radial-gradient(circle at 68% 72%, rgba(157, 200, 255, 0.32), transparent 34%),
+    linear-gradient(145deg, #fffaf0, #d9def1 52%, #f1b8d9);
+  box-shadow:
+    inset -0.22rem -0.28rem 0.58rem rgba(88, 89, 128, 0.24),
+    inset 0.18rem 0.18rem 0.45rem rgba(255, 255, 255, 0.9),
+    0 0 1.15rem rgba(246, 240, 223, 0.46);
+}
+
+.destiny-button {
+  z-index: 2;
+  display: grid;
+  width: 100%;
+  margin: 0 0 0.42rem;
+  padding: 0.62rem 1rem;
+  border-radius: 1.1rem;
+  text-align: center;
+}
+
+.destiny-button span {
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+}
+
+.destiny-button small {
+  margin-top: 0.18rem;
+  color: rgba(246, 240, 223, 0.58);
+  font-family: var(--display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.answer-zone {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  min-height: 10.9rem;
+  opacity: 0;
+  transform: translateY(1rem);
+  pointer-events: none;
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.answer-zone.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.bubble {
+  position: relative;
+  display: grid;
+  align-content: center;
+  width: min(55vw, 212px);
+  aspect-ratio: 1;
+  padding: 1.35rem 1.05rem;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.88), transparent 13%),
+    radial-gradient(circle at 72% 76%, rgba(157, 200, 255, 0.32), transparent 24%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(160, 186, 225, 0.13) 48%, rgba(241, 184, 217, 0.16));
+  box-shadow:
+    0 0 50px rgba(157, 200, 255, 0.24),
+    inset 0 0 34px rgba(255, 255, 255, 0.18);
+  transform: scale(0.72);
+  animation: bubbleBirth 800ms cubic-bezier(0.2, 1, 0.24, 1) forwards, bubbleBreathe 4.8s ease-in-out 900ms infinite;
+}
+
+.bubble.is-dense {
+  padding: 0.76rem 0.66rem;
+}
+
+.bubble::before {
+  content: "";
+  position: absolute;
+  inset: 13%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: inherit;
+}
+
+.bubble-shine {
+  position: absolute;
+  inset: -20%;
+  background: conic-gradient(from 120deg, transparent, rgba(255, 255, 255, 0.34), transparent, rgba(157, 200, 255, 0.2), transparent);
+  animation: bubbleSpin 7s linear infinite;
+}
+
+.answer-lyric,
+.answer-song {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.answer-lyric {
+  max-height: 7.15rem;
+  overflow: visible;
+  font-size: var(--lyric-size, clamp(1.3rem, 6.2vw, 1.8rem));
+  font-weight: 600;
+  line-height: 1.26;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  white-space: pre-line;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
+}
+
+.answer-song {
+  margin-top: 0.72rem;
+  color: rgba(246, 240, 223, 0.74);
+  font-size: clamp(0.72rem, 3.1vw, 0.9rem);
+  line-height: 1.35;
+}
+
+.answer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 0.48rem;
+}
+
+.reset-button,
+.home-button {
+  min-width: 7.1rem;
+  padding: 0.48rem 0.72rem;
+  border: 1px solid rgba(246, 240, 223, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(246, 240, 223, 0.72);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.oracle-disclaimer {
+  bottom: 0.7rem;
+}
+
+.home-button {
+  color: rgba(216, 189, 130, 0.86);
+}
+
+@keyframes starDrift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-40px, 52px, 0); }
+}
+
+@keyframes floatStars {
+  from { transform: translateY(-0.4rem); opacity: 0.64; }
+  to { transform: translateY(0.7rem); opacity: 1; }
+}
+
+@keyframes orbFloat {
+  to { transform: translate3d(1.3rem, -1.5rem, 0) scale(1.08); }
+}
+
+@keyframes shellGlimmer {
+  0%, 55% { transform: translateX(-90%); }
+  100% { transform: translateX(92%); }
+}
+
+@keyframes pulseButton {
+  0%, 100% { box-shadow: 0 0 18px rgba(216, 189, 130, 0.18); }
+  50% { box-shadow: 0 0 34px rgba(246, 240, 223, 0.34); }
+}
+
+@keyframes pearlPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 18px rgba(246, 240, 223, 0.16);
+  }
+
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 0 30px rgba(246, 240, 223, 0.36);
+  }
+}
+
+@keyframes hintFloat {
+  0%, 100% { transform: translateY(0); opacity: 0.42; }
+  50% { transform: translateY(-0.35rem); opacity: 0.78; }
+}
+
+@keyframes numberRoll {
+  0% { transform: translateY(-1px); filter: blur(0); }
+  50% { transform: translateY(1px); filter: blur(1px); }
+  100% { transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes bubbleBirth {
+  0% { opacity: 0; transform: scale(0.24); filter: blur(12px); }
+  55% { opacity: 1; transform: scale(1.08); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+@keyframes bubbleBreathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-0.35rem) scale(1.025); }
+}
+
+@keyframes bubbleSpin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 767px) {
+  html,
+  body,
+  .app,
+  .stage,
+  .page {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .page {
+    padding: max(0.65rem, env(safe-area-inset-top)) 0.78rem max(0.65rem, env(safe-area-inset-bottom));
+  }
+
+  .cover-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: max(1.65rem, env(safe-area-inset-top));
+  }
+
+  .cover-page h1 {
+    margin-bottom: 0.55rem;
+    font-size: clamp(1.65rem, 8.2vw, 2.25rem);
+  }
+
+  .shell-book {
+    width: min(62vw, 250px, 31dvh);
+    margin: clamp(0.35rem, 1.8dvh, 0.85rem) 0 clamp(0.35rem, 1.8dvh, 0.95rem);
+    flex: 0 0 auto;
+  }
+
+  .cover-page.is-open .shell-book {
+    width: min(50vw, 205px, 24dvh);
+    margin: clamp(0.12rem, 0.8dvh, 0.25rem) 0 clamp(0.2rem, 1dvh, 0.45rem);
+    transform: translateX(7vw) scale(0.9);
+  }
+
+  .ritual-card {
+    width: min(86vw, 320px);
+    padding: 0.86rem 0.92rem 0.98rem;
+    flex: 0 0 auto;
+  }
+
+  .ritual-card p {
+    font-size: 0.86rem;
+    line-height: 1.58;
+  }
+
+  .glow-button {
+    margin-top: 0.7rem;
+    padding: 0.68rem 1.1rem;
+  }
+
+  .oracle-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(0.28rem, env(safe-area-inset-top)) 0.55rem max(0.28rem, env(safe-area-inset-bottom));
+  }
+
+  .tarot-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: min(93vw, 380px);
+    height: calc(100dvh - 0.9rem);
+    min-height: auto;
+    overflow: hidden;
+    padding: 1.12rem 0.78rem 2rem;
+    border-radius: 1.35rem;
+  }
+
+  .tarot-border {
+    inset: 0.5rem;
+    border-radius: 1rem;
+  }
+
+  .tarot-border::before {
+    top: 1.05rem;
+  }
+
+  .tarot-border::after {
+    bottom: 1.05rem;
+  }
+
+  .corner {
+    font-size: 0.86rem;
+  }
+
+  .oracle-header {
+    width: min(100%, 16rem);
+    flex: 0 0 auto;
+  }
+
+  .oracle-header h2 {
+    font-size: clamp(1.16rem, 5.8vw, 1.62rem);
+  }
+
+  .oracle-subtitle {
+    margin: 0.22rem auto 0.4rem;
+    font-size: clamp(0.64rem, 2.9vw, 0.78rem);
+    line-height: 1.32;
+  }
+
+  .question-field {
+    width: min(80%, 292px);
+    gap: 0.26rem;
+    margin-bottom: 0.34rem;
+    flex: 0 0 auto;
+  }
+
+  .question-field span,
+  .page-number-wrap span {
+    font-size: 0.66rem;
+  }
+
+  textarea {
+    min-height: 2.62rem;
+    padding: 0.48rem 0.64rem;
+    border-radius: 0.82rem;
+    font-size: 0.82rem;
+    line-height: 1.42;
+  }
+
+  .page-picker {
+    grid-template-columns: 2.55rem 1fr 2.55rem;
+    gap: 0.42rem;
+    margin: 0.28rem 0;
+    flex: 0 0 auto;
+  }
+
+  .page-step {
+    height: 2.42rem;
+  }
+
+  .page-number-wrap {
+    gap: 0.2rem;
+  }
+
+  .page-number-wrap input {
+    height: 2.72rem;
+    font-size: 2rem;
+  }
+
+  .page-hint {
+    margin: -0.25rem 0 0.26rem;
+    font-size: 0.67rem;
+    flex: 0 0 auto;
+  }
+
+  .confirm-button {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-bottom: 0.26rem;
+    flex: 0 0 auto;
+  }
+
+  .confirm-button::before {
+    inset: -0.38rem;
+  }
+
+  .pearl-core {
+    width: 1.42rem;
+    height: 1.42rem;
+  }
+
+  .destiny-button {
+    margin-bottom: 0.28rem;
+    padding: 0.44rem 0.78rem;
+    border-radius: 0.9rem;
+    flex: 0 0 auto;
+  }
+
+  .destiny-button span {
+    font-size: 0.88rem;
+  }
+
+  .destiny-button small {
+    margin-top: 0.1rem;
+    font-size: 0.66rem;
+  }
+
+  .answer-zone {
+    min-height: 0;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: clamp(0.25rem, 1.2dvh, 0.72rem);
+  }
+
+  .bubble {
+    width: min(58vw, 224px, 27dvh);
+    padding: 1.08rem 0.9rem;
+  }
+
+  .bubble.is-dense {
+    padding: 0.78rem 0.66rem;
+  }
+
+  .answer-lyric {
+    max-height: 7.1rem;
+    line-height: 1.24;
+  }
+
+  .answer-song {
+    margin-top: 0.52rem;
+    font-size: clamp(0.68rem, 3vw, 0.82rem);
+  }
+
+  .answer-actions {
+    gap: 0.42rem;
+    margin-top: 0.42rem;
+  }
+
+  .reset-button,
+  .home-button {
+    min-width: 6.45rem;
+    padding: 0.38rem 0.56rem;
+    font-size: 0.72rem;
+  }
+
+  .disclaimer {
+    bottom: max(0.42rem, env(safe-area-inset-bottom));
+    font-size: 0.58rem;
+  }
+
+  .oracle-disclaimer {
+    bottom: max(0.48rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 767px) and (max-height: 740px) {
+  .cover-page {
+    padding-top: max(1.05rem, env(safe-area-inset-top));
+  }
+
+  .cover-page h1 {
+    margin-bottom: 0.35rem;
+    font-size: clamp(1.42rem, 7vw, 1.95rem);
+  }
+
+  .eyebrow {
+    margin-bottom: 0.32rem;
+    font-size: 0.68rem;
+  }
+
+  .cover-page.is-open .shell-book {
+    width: min(44vw, 176px, 20dvh);
+  }
+
+  .ritual-card {
+    padding: 0.68rem 0.78rem 0.78rem;
+  }
+
+  .ritual-card p {
+    margin: 0.18rem 0;
+    font-size: 0.78rem;
+    line-height: 1.42;
+  }
+
+  .glow-button {
+    margin-top: 0.46rem;
+    padding: 0.54rem 0.92rem;
+    font-size: 0.82rem;
+  }
+
+  .swipe-hint {
+    margin-top: 0.24rem;
+    font-size: 0.64rem;
+  }
+
+  .tarot-card {
+    padding-top: 0.7rem;
+    padding-bottom: 1.72rem;
+  }
+
+  .oracle-header h2 {
+    font-size: clamp(1.02rem, 5vw, 1.34rem);
+  }
+
+  .oracle-subtitle {
+    margin-bottom: 0.24rem;
+    font-size: 0.6rem;
+    line-height: 1.2;
+  }
+
+  .question-field {
+    margin-bottom: 0.22rem;
+  }
+
+  textarea {
+    min-height: 2.35rem;
+    padding: 0.42rem 0.56rem;
+    font-size: 0.72rem;
+  }
+
+  .page-picker {
+    margin: 0.2rem 0;
+  }
+
+  .page-number-wrap input {
+    height: 2.42rem;
+    font-size: 1.72rem;
+  }
+
+  .page-step {
+    height: 2.16rem;
+  }
+
+  .confirm-button {
+    width: 2.16rem;
+    height: 2.16rem;
+  }
+
+  .pearl-core {
+    width: 1.18rem;
+    height: 1.18rem;
+  }
+
+  .destiny-button {
+    padding: 0.42rem 0.68rem;
+  }
+
+  .bubble {
+    width: min(52vw, 196px, 24dvh);
+    padding: 0.86rem 0.72rem;
+  }
+
+  .answer-actions {
+    margin-top: 0.32rem;
+  }
+
+  .reset-button,
+  .home-button {
+    min-width: 5.7rem;
+    padding: 0.3rem 0.46rem;
+    font-size: 0.66rem;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 760px) {
+  .shell-book {
+    width: min(65vw, 270px);
+    margin: 0.65rem 0;
+  }
+
+  .ritual-card {
+    padding: 0.85rem 0.9rem 1rem;
+  }
+
+  .ritual-card p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .tarot-card {
+    padding-top: 0.9rem;
+    padding-bottom: 2.45rem;
+  }
+
+  textarea {
+    min-height: 2.85rem;
+    padding-block: 0.55rem;
+  }
+
+  .oracle-header h2 {
+    font-size: clamp(1.25rem, 4vw, 1.72rem);
+  }
+
+  .oracle-subtitle {
+    margin-bottom: 0.45rem;
+    font-size: 0.78rem;
+    line-height: 1.25;
+  }
+
+  .page-picker {
+    margin: 0.35rem 0;
+  }
+
+  .page-number-wrap input {
+    height: 3rem;
+  }
+
+  .confirm-button {
+    width: 2.65rem;
+    height: 2.65rem;
+    margin-bottom: 0.24rem;
+  }
+
+  .destiny-button {
+    padding-block: 0.5rem;
+    margin-bottom: 0.32rem;
+  }
+
+  .answer-zone {
+    min-height: 8.8rem;
+  }
+
+  .bubble {
+    width: min(42vw, 164px);
+    padding: 0.9rem 0.72rem;
+  }
+
+  .answer-lyric {
+    max-height: 5.35rem;
+  }
+
+  .answer-song {
+    margin-top: 0.45rem;
+  }
+
+  .answer-actions {
+    margin-top: 0.26rem;
+  }
+
+  .reset-button,
+  .home-button {
+    padding-block: 0.34rem;
+    font-size: 0.72rem;
+  }
+
+  .oracle-disclaimer {
+    bottom: 0.42rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
